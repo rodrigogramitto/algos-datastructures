@@ -26,7 +26,36 @@ HashTable.prototype.get = function(key) {
     if (key === el[0]) return el;
   }
   return undefined;
+};
+
+HashTable.prototype.values = function() {
+  let values = [];
+
+  for (let i = 0; i < this.keyMap.length; i++) {
+    if (this.keyMap[i]) {
+      for (let el of this.keyMap[i]) {
+        if (!values.includes(el[1])) values.push(el[1])
+      }
+    }
+  }
+  return values;
 }
+
+HashTable.prototype.keys = function() {
+  let values = [];
+
+  for (let i = 0; i < this.keyMap.length; i++) {
+    if (this.keyMap[i]) {
+      for (let el of this.keyMap[i]) {
+        values.push(el[0])
+      }
+    }
+  }
+  return values;
+}
+
+
+
 
 const myMap = new HashTable(5);
 
