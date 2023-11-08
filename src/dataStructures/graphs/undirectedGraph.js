@@ -31,3 +31,84 @@ Graph.prototype.removeVertex = function(name) {
   delete this.adjacencyList[vertex];
 };
 
+Graph.prototype.depthFirstRecursive = function(node) {
+  let results = [];
+  let visited = {};
+  let adjacencyList = this.adjacencyList;
+
+    let dfs = (vertex) => {
+      if (!vertex) return;
+
+      visited[vertex] = true;
+      results.push(vertex);
+      adjacencyList[vertex].forEach(neighbor => {
+        if(!visited[neighbor]) {
+          return dfs(neighbor);
+        }
+      })
+    }
+    dfs(node);
+
+  return results;
+}
+
+Graph.prototype.depthFirstIterative = function(node) {
+  let results = [];
+  let s = [];
+  let visited = {};
+  s.push(node);
+
+    while(s.length) {
+      let vertex = s.pop();
+      if (!visited[vertex]) {
+        visited[vertex] = true;
+        results.push(vertex);
+        this.adjacencyList[vertex].forEach(neighbor => {
+          s.push(neighbor);
+        })
+      }
+    }
+
+  return results;
+}
+
+
+Graph.prototype.bfs = function(node) {
+  let [results, visited, q] = [[], {}, [node]];
+  visited[node] = true;
+    while(q.length) {
+      let vertex = q.shift();
+      results.push(vertex);
+        this.adjacencyList[vertex].forEach(neighbor => {
+          if (!visited[neighbor]) {
+            visited[neighbor] = true;
+            q.push(neighbor);
+          }
+        })
+    }
+    return results;
+}
+
+let g = new Graph();
+
+g.addVertex("A")
+g.addVertex("B")
+g.addVertex("C")
+g.addVertex("D")
+g.addVertex("E")
+g.addVertex("F")
+
+
+g.addEdge("A", "B")
+g.addEdge("A", "C")
+g.addEdge("B","D")
+g.addEdge("C","E")
+g.addEdge("D","E")
+g.addEdge("D","F")
+g.addEdge("E","F")
+let actual1 = g.depthFirstRecursive("A")
+let actual2 = g.depthFirstIterative("A");
+let actual3 = g.bfs("A");
+console.log(actual1);
+console.log(actual2);
+console.log(actual3);
