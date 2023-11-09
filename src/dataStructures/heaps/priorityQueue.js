@@ -61,3 +61,5 @@ PriorityQueue.prototype.bubbleDown = function () {
     }
   }
 };
+
+module.exports.priorityQueue = PriorityQueue;
